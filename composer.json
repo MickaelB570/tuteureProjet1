@@ -1,0 +1,17 @@
+{
+    "name": "brion/tuteure-projet1",
+    "autoload": {
+        "psr-4": {
+            "Brion\\TuteureProjet1\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "MickaelB570",
+            "email": "113980499+MickaelB570@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "twbs/bootstrap": "^5.2"
+    }
+}

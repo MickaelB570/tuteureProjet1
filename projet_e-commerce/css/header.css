@@ -1,0 +1,33 @@
+header{
+    background-color: #f8f9fa;
+}
+
+.search{
+    padding-right: 5%; 
+    padding-left: 30%; 
+    padding-top: 0.5rem;
+}
+
+
+
+.barre_nav{
+    /* padding-right: 20%;  */
+    padding-left: 27.5%;
+}
+.barre_nav li{
+    border: solid 1px black;
+}
+
+.bouton_inscription{
+/* margin-left: 10%; */
+margin-right: 5%; 
+}
+
+.bouton_connexion{
+    /* margin-left: 10%; */
+    margin-right: 5%; 
+    }
+
+.bouton-rechercher{
+margin-right: 10%;
+}

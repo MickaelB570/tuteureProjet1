@@ -1,8 +1,9 @@
 <?php
-include 'modele/inscription.class.php';
-function Inscription(){
+include 'modele/connexion.class.php';
+function Connexion(){
     $estValide = "";
-if(isset($_GET["action"]))
+
+    if(isset($_GET["action"]))
 {
     $action = htmlentities($_GET['action']);
 }
@@ -11,12 +12,8 @@ else
     $action = "";
 }
 switch ($action) {
-    case "inscription" :
+    case "connexion" :
         {
-            //$lesGenres = GenreDal::loadGenres(1);
-            //$nbGenres = count($lesGenres);
-            //echo 'test ok';
-
             if (isset($_GET["option"]) && $_GET["option"] != "") {
                 $option = htmlentities($_GET["option"]);
                 //echo $option;
@@ -26,25 +23,17 @@ switch ($action) {
                             
                             if (isset($_POST["valider"])) 
                             {
-                                if (!empty($_POST["nom"])) $nom = htmlentities($_POST['nom']);
-                                else $nom = null;
                                 if (!empty($_POST["mail"])) $mail = htmlentities($_POST['mail']);
                                 else $mail = null;
                                 if (!empty($_POST["mdp"])) $mdp = htmlentities($_POST['mdp']);
                                 else $mdp = null;
-                                $estValide = Inscription::validerSaisie($nom, $mail, $mdp);
-                                $estAdministrateur = 1;
-                                if($estValide === null) Inscription::insererSaisie($nom, $mail, $mdp, $estAdministrateur);
+                                $estValide = Connexion::validerSaisie($mail, $mdp);
+                                if($estValide === null) $estValide = Connexion::connexion($mail, $mdp);
                                 return $estValide;
-                                
-                            }
-                        }
-            }
-
         }
-        return $estValide;
-        break;
-    }
-    return $estValide;
+    }}}}
+
 }
+
+
 }

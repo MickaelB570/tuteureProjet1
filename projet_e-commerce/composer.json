@@ -1,5 +1,6 @@
 {
     "require": {
-        "defuse/php-encryption": "^2.3"
+        "defuse/php-encryption": "^2.3",
+        "twbs/bootstrap": "^5.2"
     }
 }

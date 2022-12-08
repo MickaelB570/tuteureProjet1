@@ -1,11 +1,11 @@
 
 <html>
 <link rel="stylesheet" href="css_blog.css" />
-<header style="background-color:#E3CE7D;">
-<h1><center>Créer un compte</center></h1>
-</header>
+<head>
+<h1><center>Inscription</center></h1>
+</head>
 <center>
-<form method="post" name="form1" onsubmit="verifie()" action="index.php?uc=inscription&action=inscription&option=validerSaisie" class="co_encadree" > 
+<form method="post" name="form1" onsubmit="verifie()" action="?uc=inscription&action=inscription&option=validerSaisie" class="co_encadree" > 
 <meta charset="UTF-8">
 <table class="co_table">
 <tr> <td><strong>Nom :</strong></td> <td> <input type="text" size=20 name="nom" id="nom" required> </td> </tr>

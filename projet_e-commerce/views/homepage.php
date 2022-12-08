@@ -1,14 +1,37 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
     	<meta charset="utf-8" />
     	<title>Page accueil provisoire</title>
-    	<link href="style.css" rel="stylesheet" />
+    	<link href="css/switch.css" rel="stylesheet" />
+		<div id="searchbar" align="center">
+		</div>
+		<p> <?= $nom; ?> </p>
+		<!-- <label class="switch" id="switch" onclick="check()"> -->
+		<!-- <input type="checkbox"/> -->
+		<span></span>
+		</label>
 	</head>
 
 	<body>
     	<h1>Page d'accueil provisoire</h1>
-		<button onclick="window.location.href='index.php?uc=inscription'">Inscription</button>
+		
+<script>
+	/*
+	let nbChecked;
+	localStorage.setItem(nbChecked, 0);
+	function check() {
+    var remember = document.getElementById('switch');
+    if (remember.checked){
+        alert("checked") ;
+    }else{
+        alert("You didn't check it! Let me check it for you.")
+    }
+
+}
+*/
+</script>
     	<?php
     	//foreach ($posts as $post) {
     	?>

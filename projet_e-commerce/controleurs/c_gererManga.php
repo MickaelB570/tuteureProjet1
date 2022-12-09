@@ -16,13 +16,217 @@ else
 
 switch($action)
 {
-    case($action) :
+    case("listerMangas") :
         {
             $lesMangas = MangaDal::loadMangas(1);
             $nbMangas = count($lesMangas);
             include "views/recherche_avancee.php";
         }
-        default:
-        include 'views/recherche_avancee.php';
         break;
+
+    case "consulterManga": {
+        $hasErrors = false;
+
+        if (isset($_GET["id"])) {
+
+            $ID = htmlentities($_GET["id"]);
+
+            $leManga = MangaDal::loadMangaByID($ID);
+
+            // connexion à la base de données
+            // récupération du libellé dans la base
+
+            // Récupération de l'ouvrage
+            if ($leManga == null) {
+
+                $tabErreurs["Erreur"] = "Ce manga n'existe pas !";
+                $tabErreurs["ID"] = $ID;
+                $hasErrors = true;
+            }
+            if ($hasErrors) {
+                $msg = "La consultation est impossible";
+                 $lien = '<a href="?uc=gererManga">retour à la saisie</a>';
+                include 'views/_v_afficherErreurs.php';
+            } else {
+                include "views/v_consulterManga.php";
+             }
+        } else {
+            $msg = "La consultation est impossible";
+            $lien = '<a href="?uc=gererManga">retour à la saisie</a>';
+            $tabErreurs["Erreur"] = "aucun manga n'a été transmis pour consultation !";
+            $hasErrors = true;
+            include 'views/_v_afficherErreurs.php';
+        }
+    }
+    break;
+    case "ajouterManga": {
+        $hasErrors = false;
+        $id = '';
+        $nom = '';
+        $prix = '';
+        $stock = '';
+        $description = '';
+        $etat = '';
+        $annee = '';
+        $auteur = '';
+        $dessinateur = '';
+        $idPays = '';
+        $lienImage = '';
+
+
+        // traitement de l'option : saisie ou validation ?
+        if (isset($_GET["option"])) {
+            $option = htmlentities($_GET["option"]);
+        } else {
+            $option = 'saisirManga';
+        }
+        switch ($option) {
+            case 'saisirManga': {
+                    include 'views/v_ajouterManga.php';
+                }
+                break;
+            case 'validerSaisie': {
+                    $afficherForm = false;
+                    if (isset($_POST["cmdValider"])) {
+
+                        // récupération du titre
+                        if (!empty($_POST["id"])) {
+                            $id = ucfirst(htmlentities($_POST["id"]));
+                        }
+                        // récupération du salle
+                        if (!empty($_POST["nom"])) {
+                            $nom = ucfirst(htmlentities($_POST["nom"]));
+                        }
+                        // récupération du rayon
+                        if (!empty($_POST["prix"])) {
+                            $prix = htmlentities($_POST["prix"]);
+                        }
+                        // récupération du genre
+                        if (strlen(trim($_POST["stock"])) != 0) {
+                            $stock = htmlentities($_POST["stock"]);
+                            //echo $stock;
+                        }
+                        // récupération du genre
+                        if (!empty($_POST["description"])) {
+                            $description = ucfirst(htmlentities($_POST["description"]));
+                        }
+                        
+                        // récupération du genre
+                        if (!empty($_POST["etat"])) {
+                            $etat = htmlentities($_POST["etat"]);
+                        }
+
+                         // récupération du genre
+                        if (!empty($_POST["annee"])) {
+                            $annee = htmlentities($_POST["annee"]);
+                        }
+
+                         // récupération du genre
+                         if (!empty($_POST["auteur"])) {
+                            $auteur = ucfirst(htmlentities($_POST["auteur"]));
+                        }
+
+                         // récupération du genre
+                         if (!empty($_POST["dessinateur"])) {
+                            $dessinateur = ucfirst(htmlentities($_POST["dessinateur"]));
+                        }
+
+                         // récupération du genre
+                         if (!empty($_POST["idPays"])) {
+                            $idPays = htmlentities($_POST["idPays"]);
+                        }
+
+                        // récupération du genre
+                         if (!empty($_POST["lien"])) {
+                            $lienImage = htmlentities($_POST["lien"]);
+                        }
+
+
+                    } else {
+
+                        $msg = "Une erreure s'est produite";
+                        $lien = '<a href="index.php?uc=gererManga">retour à la saisie</a>';
+                        $tabErreurs["Erreur"] = "Accès interdit";
+                        $hasErrors = true;
+                        include 'vues/_v_afficherErreurs.php';
+                    }
+
+
+                    if(strlen(trim($stock)) == 0 )
+                    {
+                        $stock = 0;
+                    }
+
+
+                    // test zones obligatoires
+                    if (!empty($id) and !empty($nom) and !empty($prix)   and !empty($description)and !empty($annee)and !empty($auteur)and !empty($dessinateur)and !empty($idPays)and !empty($lienImage)) {
+                    } else {
+                        // une ou plusieurs valeurs n'ont pas été saisies
+                        if (empty($id)) {
+                            $tabErreurs["id"] = "L'id doit être renseigné ! ";
+                        }
+                        if (empty($nom)) {
+                            $tabErreurs["nom"] = "Le nom doit être renseigné ! ";
+                        }
+                        if (empty($prix)) {
+                            $tabErreurs["prix"] = "Le prix doit être renseigné ! ";
+                        }
+
+                        if (empty($description)) {
+                            $tabErreurs["description"] = "la description doit être précisé ";
+                        }
+                        if (empty($annee)) {
+                            $tabErreurs["annee"] = "l'annee doit être précisé ";
+                        }
+                        if (empty($auteur)) {
+                            $tabErreurs["auteur"] = "l'auteur doit être précisé ";
+                        }
+                        if (empty($dessinateur)) {
+                            $tabErreurs["dessinateur"] = "le dessinateur doit être précisé ";
+                        }
+                        if (empty($idPays)) {
+                            $tabErreurs["idPays"] = "l'id du pays doit être précisé ";
+                        }
+                        if (empty($lienImage)) {
+                            $tabErreurs["lienImage"] = "le lien de l'image doit être précisé ";
+                        }
+
+
+                        $hasErrors = true;
+                    }
+                    if (!$hasErrors) {
+                        // ajout dans la base de données
+
+                        try {
+                            $res = MangaDal::addManga($id, $nom, $prix, $stock, $description,$etat,$annee, $auteur,$dessinateur,$idPays, $lienImage);
+
+                            if ($res > 0) {
+                                $msg = "Le manga nommé " . $nom . " de l'auteur " . $auteur .  " a été ajouté";
+                                include 'views/_v_afficherMessage.php';
+                                //include 'vues/v_consulterGenre.php
+
+                            } else {
+                                echo "ERREUR";
+                                //$msg = "L'opération d'ajout n'a pas pu être menée à terme en raison des erreurs suivantes :";
+                                //$lien = '<a href="index.php?uc=gererOuvrages&action=ajouterOuvrage">Retour à la saisie</a>';
+                                //include 'vues/_v_afficherErreurs.php';
+                            }
+                        } catch (PDOException $e) {
+                            $tabErreurs["Erreur"] = 'Une exception PDO a été levée !';
+                            $hasErrors = true;
+                        }
+                    }
+                    if ($hasErrors) {
+                        $msg = "l'opération d'ajout n'a pas pu être menée à terme en raison des erreurs suivantes test:";
+                        $lien = '<a href="index.php?uc=gererOuvrages&action=ajouterOuvrage">retour à saisie</a>';
+                        include "views/_v_afficherErreurs.php";
+                    }
+                }
+        }
+        break;
+    }
+    break;
+    default:
+    include 'views/recherche_avancee.php';
+    break;
 }

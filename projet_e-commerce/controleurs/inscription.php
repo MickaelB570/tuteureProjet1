@@ -33,7 +33,7 @@ switch ($action) {
                                 if (!empty($_POST["mdp"])) $mdp = htmlentities($_POST['mdp']);
                                 else $mdp = null;
                                 $estValide = Inscription::validerSaisie($nom, $mail, $mdp);
-                                $estAdministrateur = 1;
+                                $estAdministrateur = 0;
                                 if($estValide === null) Inscription::insererSaisie($nom, $mail, $mdp, $estAdministrateur);
                                 return $estValide;
                                 

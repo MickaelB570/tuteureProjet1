@@ -7,6 +7,13 @@ include "include/_reference.lib.php";
 session_start();
 if(isset($_SESSION["nom_utilisateur"])) $nom = $_SESSION["nom_utilisateur"];
 else $nom = "";
+if(isset($_SESSION["estAdministrateur"])){
+$testAdministrateur = $_SESSION["estAdministrateur"];
+//echo $testAdministrateur; 
+if($testAdministrateur == 1) $estAdministrateur = true;
+else $estAdministrateur = false;
+}
+else $estAdministrateur = false;
 include("./vendor/autoload.php");
 if (isset($_GET['uc'])){
     $uc = $_GET['uc'];

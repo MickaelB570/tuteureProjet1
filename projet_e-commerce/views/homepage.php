@@ -8,6 +8,9 @@
 		<div id="searchbar" align="center">
 		</div>
 		<p> <?= $nom; ?> </p>
+		<?php     
+		//if($estAdministrateur == true) echo "<button class='btn btn-outline-success' onclick=\"window.location.href='?uc=ajoutManga'\">Ajouter un manga</button>";
+		?>
 		<!-- <label class="switch" id="switch" onclick="check()"> -->
 		<!-- <input type="checkbox"/> -->
 		<span></span>

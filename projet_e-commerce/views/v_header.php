@@ -28,10 +28,10 @@
           <a class="nav-link active" aria-current="page" href="?uc=gererManga">Recherche avancée</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="">Contact</a>
+          <a class="nav-link active" aria-current="page" href="?uc=contact">Contact</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="">Qui sommes-nous ?</a>
+          <a class="nav-link active" aria-current="page" href="?uc=qui_sommes_nous">Qui sommes-nous ?</a>
         </li>
       </ul>
   

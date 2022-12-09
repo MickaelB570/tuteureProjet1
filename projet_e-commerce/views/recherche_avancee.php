@@ -1,7 +1,9 @@
 
 
 <div>
- 
+    <?php
+    if($estAdministrateur == true) echo "<button class='btn btn-outline-success' onclick=\"window.location.href='?uc=gererManga&action=ajouterManga&option=saisirManga'\">Ajouter un manga</button>";
+    ?>
     <table>
                                 <!--affichage de l'entête du tableau -->
         <tr>
@@ -13,6 +15,7 @@
         <th>Auteur</th>
         <th>Dessinateur</th>
         <th>Image</th>
+        <th></th>
         </tr>
     <?php
 
@@ -29,6 +32,7 @@
             <td><?php echo $unManga->getAuteur() ?> </td>
             <td><?php echo $unManga->getDessinateur() ?> </td>
             <td><img width="150px" src="<?php echo $unManga->getLien_image() ?> "> </img></td>
+            <td><button class=""><a href="?uc=gererManga&action=consulterManga&id=<?php echo $unManga->getID() ?>"> Voir plus </a></button></td>
         </tr>
     <?php
         }

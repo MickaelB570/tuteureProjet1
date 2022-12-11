@@ -13,7 +13,7 @@
 <tr> <td><strong>Mot de passe :</strong></td> <td> <input type="text" size=20 name="mdp" id="mdp" required></td> </tr>
 </br>
 </table>
-<br><INPUT TYPE="submit" NAME="valider" VALUE=" Valider " class="bouton">
+<br><INPUT class="btn btn-outline-success"  TYPE="submit" NAME="valider" VALUE=" Valider " class="bouton">
 </form>
 <script language="javascript"> 
  function verifie(){

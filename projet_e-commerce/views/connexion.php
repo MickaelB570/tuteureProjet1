@@ -11,6 +11,8 @@
 <form method="post" name="form1" onsubmit="verifie()" action="?uc=connexion&action=connexion&option=validerSaisie" class="co_encadree"> 
 Adresse mail : <br/> <input type="text" size=30 name="mail" id="mail" required><br/>
 Mot de passe : <br/> <input type="password" size=20 name="mdp" id="mdp" required><br/>
+<p>Vous n'êtes pas encore inscrit ? <a href="?uc=inscription">Inscrivez vous !</a></p>
+
 <br><INPUT TYPE="submit" NAME="valider" VALUE=" Valider " class="btn btn-outline-success">
 </form>
 <p> <?= $estValide; ?> </p>

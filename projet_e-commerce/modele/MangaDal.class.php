@@ -50,8 +50,8 @@ class MangaDal
 
     /**
      * recupère toutes les informations d'un ouvrage par rapport un son id
-     * @param $id : id des ouvrage
-     * @return un objet ouvrage
+     * @param $id : id du manga
+     * @return un objet manga
      */
     public static function loadMangaByID($id) {
         $cnx = new PdoDao();
@@ -87,7 +87,7 @@ class MangaDal
 
 /**
  * Ajoute un ouvrage dans la table ouvrage
- * @param les attributs d'un ouvrage
+ * @param les attributs d'un manga
  * @return le nombre ligne affectés si la requête à réussi
  */
 public static function addManga($id_manga,$nom_manga,$prix,$stock,$description,$état,$année,$auteur,$dessinateur,$id_pays,$lienImage) {
@@ -113,5 +113,39 @@ public static function addManga($id_manga,$nom_manga,$prix,$stock,$description,$
     }
     return $res;
 }
+
+
+    /**
+     * supprime un ouvrage de la table ouvrage
+     * @param $idManga : l"ID du manga
+     * @return le numéro du manga supprimé si la requête à réussi
+     */
+    public static function delManga($idManga) {
+        $cnx = new PdoDao();
+        $qry = 'DELETE FROM manga WHERE id_manga = "'.$idManga.'"';
+        $res = $cnx->execSQL($qry,array());
+        if (is_a($res,'PDOException')) {
+            return PDO_EXCEPTION_VALUE;
+        }
+        return $res;
+    }
+
+
+        /**
+     * met à jour un ouvrage
+     * @param $unManga : recupère un manga
+     * @return le resultat s'il à réussi
+     */
+    public static function setManga($unManga)
+    {
+        $cnx = new PdoDao();
+        $qry = 'UPDATE manga SET nom_manga="'.$unManga->getNom_manga() .'", prix='.$unManga->getPrix() .', stock='.$unManga->getStock() .', description="'.$unManga->getDescription() .'", état='.$unManga->getEtat() .', année='.$unManga->getAnnee() .', auteur="'.$unManga->getAuteur() .'", dessinateur="'.$unManga->getDessinateur() .'", id_pays='.$unManga->getPays() .', lien_image="'.$unManga->getLien_image() .'" where id_manga = "'. $unManga->getID() .'"';
+        $res = $cnx->execSQL($qry,array());
+        if (is_a($res, 'PDOException')){
+            return PDO_EXCEPTION_VALUE;
+        }
+        return $res;
+    }
+
 }
 

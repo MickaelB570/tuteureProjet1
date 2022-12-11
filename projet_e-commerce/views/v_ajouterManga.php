@@ -158,7 +158,7 @@
                         </table>
                 <div class="pied-form">
                     <p>
-                        <input id="cmdValider" name="cmdValider" 
+                        <input class='btn btn-outline-success' id="cmdValider" name="cmdValider" 
                                 type="submit"
                                 value="Ajouter"/>
                     </p> 

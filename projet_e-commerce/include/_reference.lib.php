@@ -35,7 +35,7 @@ class Manga
         $this->setStock($Tstock);
         $this->setDescription($Tdescription);
         $this->setEtat($Tetat);
-        $this->setAnee($Tannee);
+        $this->setAnnee($Tannee);
         $this->setAuteur($Tauteur);
         $this->setDessinateur($Tdessinateur);
         $this->setPays($Tpays);
@@ -126,7 +126,7 @@ class Manga
 		return $this->annee;
 	}
 
-	public function setAnee($annee) {
+	public function setAnnee($annee) {
 		$this->annee = $annee;
 	}
 

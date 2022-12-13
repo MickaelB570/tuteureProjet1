@@ -236,6 +236,10 @@ margin-right: 10%;
     border: 1px solid #000;
 }
 
+/* .co_table > th, td{
+    padding: 0px 0px;
+    border: none;
+} */
 
 .navbar-img
 {

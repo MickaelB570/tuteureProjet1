@@ -1,12 +1,9 @@
 <?php
-
 require_once 'include/_config.inc.php';
 include "include/_reference.lib.php";
-
 session_start();
-$langue = 0;
-if(isset($_SESSION["nom_utilisateur"])) $nom = $_SESSION["nom_utilisateur"];
-else $nom = "";
+if(isset($_SESSION["nom_utilisateur"])) $nom_u = $_SESSION["nom_utilisateur"];
+else $nom_u = "";
 $estAdministrateur = false;
 if(isset($_SESSION["estAdministrateur"])){
 $testAdministrateur = $_SESSION["estAdministrateur"];
@@ -26,6 +23,24 @@ if (isset($_POST["rechercher"])){
     $recherche = htmlentities(trim($_POST["recherche"]));
     header('Status: 301 Moved Permanently', false, 301); 
     header('Location: ?uc=gererManga&search='.$recherche);
+}
+if (isset($_POST["bouton_langue"])){
+    $langue = $_POST["langue"];
+    $_SESSION["langue"] = $langue;
+    //echo $langue;
+    if($langue == "en"){
+        include("include/_anglais.php");
+    }else{
+        include("include/_francais.php");
+    }
+}else{
+    if(isset($_SESSION["langue"])) $langue = $_SESSION["langue"];
+    else $langue = "fr";
+    if($langue == "en"){
+        include("include/_anglais.php");
+    }else{
+        include("include/_francais.php");
+    }
 }
 switch($uc)
 {
@@ -50,8 +65,9 @@ switch($uc)
         break;
 
     case "deconnexion":
-        session_destroy() ;
-        session_start() ;
+        $_SESSION["nom_utilisateur"]="";
+		$_SESSION['id_utilisateur']= "";
+		$_SESSION['estAdministrateur']="";
         header('Status: 301 Moved Permanently', false, 301); 
         header('Location: ./');
         break;

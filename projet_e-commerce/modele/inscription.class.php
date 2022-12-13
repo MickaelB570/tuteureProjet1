@@ -3,7 +3,7 @@ use \Defuse\Crypto\Crypto;
 use \Defuse\Crypto\Key;
 class Inscription{
 
-    public static function validerSaisie($nom, $mail, $mdp){
+    public static function validerSaisie($nom, $mail, $mdp , $mdp2){
         try {
             $objPdo = new PDO('mysql:host=localhost;dbname=projet_e-commerce;charset=utf8', 'root', '');
         } catch(Exception $e) {
@@ -32,6 +32,19 @@ class Inscription{
             if (strlen(trim($mdp))>500){
             return "mot de passe invalide!<br />";
             die();	
+            }
+
+            if (trim($mdp2)==null){
+            return "mot de passe invalide!<br />";
+            die();	
+            }
+            if (strlen(trim($mdp2))>500){
+            return "mot de passe invalide!<br />";
+            die();	
+            }
+            if($mdp != $mdp2){
+            return "les mots de passe sont différents!<br />";
+            die();  
             }
             if (strpos($mail,"@")==false){
             return "adresse email invalide!<br />";

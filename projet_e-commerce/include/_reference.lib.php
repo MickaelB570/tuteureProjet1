@@ -5,7 +5,6 @@ class Manga
     private $id;
     private $nom_manga;
     private $prix;
-    private $stock;
     private $description;
     private $etat;
     private $annee;
@@ -19,7 +18,6 @@ class Manga
         $Tid,
         $Tnom_manga,
         $Tprix,
-        $Tstock,
         $Tdescription,
         $Tetat,
         $Tannee,
@@ -32,7 +30,6 @@ class Manga
         $this->setID($Tid);
         $this->setNom_manga($Tnom_manga);
         $this->setPrix($Tprix);
-        $this->setStock($Tstock);
         $this->setDescription($Tdescription);
         $this->setEtat($Tetat);
         $this->setAnnee($Tannee);
@@ -64,14 +61,6 @@ class Manga
 
 	public function setPrix($prix) {
 		$this->prix = $prix;
-	}
-
-	public function getStock() {
-		return $this->stock;
-	}
-
-	public function setStock($stock) {
-		$this->stock = $stock;
 	}
 
 	public function getDescription() {

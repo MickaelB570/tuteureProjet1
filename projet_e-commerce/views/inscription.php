@@ -2,18 +2,17 @@
 <html>
 <link rel="stylesheet" href="css_blog.css" />
 <head>
-<h1><center>Inscription</center></h1>
+<h1><center><?= $titre_inscription ?></center></h1>
 </head>
 <center>
 <form method="post" name="form1" onsubmit="verifie()" action="?uc=inscription&action=inscription&option=validerSaisie" class="co_encadree" > 
 <meta charset="UTF-8">
-<table class="co_table">
-<tr> <td><strong>Nom :</strong></td> <td> <input type="text" size=20 name="nom" id="nom" required> </td> </tr>
-<tr> <td><strong>Adresse mail :</strong></td> <td> <input type="mail" size=30 name="mail" id="mail" required></td> </tr>
-<tr> <td><strong>Mot de passe :</strong></td> <td> <input type="text" size=20 name="mdp" id="mdp" required></td> </tr>
+<strong><?= $nom_utilisateur ?> :</strong></td> <td> <input style="margin-left: 0%; margin-bottom: 1%; margin-top: 1%; " type="text" size=20 name="nom" id="nom" required><br/>
+<strong><?= $adresse_mail ?> :</strong></td> <td> <input style="margin-left: 0%; margin-bottom: 1%; " type="mail" size=30 name="mail" id="mail" required><br/>
+<strong><?= $mot_de_passe ?> :</strong></td> <td> <input style="margin-left: 0%; margin-bottom: 1%;" type="text" size=20 name="mdp" id="mdp" required><br/>
+<strong><?= $mdp_confirm ?> :</strong></td> <td> <input style="margin-left: 0%; margin-bottom: 1%;" type="text" size=20 name="mdp2" id="mdp" required>
 </br>
-</table>
-<br><INPUT class="btn btn-outline-success"  TYPE="submit" NAME="valider" VALUE=" Valider " class="bouton">
+<br><INPUT class="btn btn-outline-success"  TYPE="submit" NAME="valider" VALUE=" <?= $valider ?> " class="bouton">
 </form>
 <script language="javascript"> 
  function verifie(){

@@ -7,7 +7,7 @@
     	<link href="css/switch.css" rel="stylesheet" />
 		<div id="searchbar" align="center">
 		</div>
-		<p> <?= $nom; ?> </p>
+		<p> </p>
 		<?php     
 		//if($estAdministrateur == true) echo "<button class='btn btn-outline-success' onclick=\"window.location.href='?uc=ajoutManga'\">Ajouter un manga</button>";
 		?>

@@ -15,33 +15,35 @@
           <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               <li class="nav-item active">
-                <a class="nav-link" href="./">Accueil</a>
+                <a class="nav-link" href="./"><?= $accueil ?></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="?uc=gererManga">Recherche</a>
+                <a class="nav-link" href="?uc=gererManga"><?= $Rechercher2 ?></a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="?uc=contact">Contact</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="?uc=qui_sommes_nous">Qui sommes-nous ?</a>
+                  <a class="nav-link" href="?uc=qui_sommes_nous"><?= $qui ?></a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" method="post" >
-              <input class="form-control mr-sm-2" name="recherche" type="search" placeholder="Rechercher un manga">
-              <button class="btn btn-outline-success my-2 my-sm-0" name="rechercher" type="submit">Rechercher</button>
+              <input class="form-control mr-sm-2" name="recherche" type="search" placeholder="<?= $Recherche ?>">
+              <button class="btn btn-outline-success my-2 my-sm-0" name="rechercher" type="submit"><?= $Rechercher ?></button>
             </form>
-            <?php if($nom == "") { ?> 
-              <li><button class="btn bg-primary"><a class="text-light" href="?uc=connexion">Connexion</a></button></li><?php }
+            <?php if($nom_u == "") { ?> 
+              <li><button class="btn bg-primary"><a class="text-light" href="?uc=connexion"><?= $connexion ?></a></button></li><?php }
             else { ?> 
-              <li><button class="btn bg-danger"><a class="deconnexion text-light"  onclick="validationDeconnexion()">Déconnexion</a></button></li> 
+              <li><button class="btn bg-danger"><a class="deconnexion text-light"  onclick="validationDeconnexion()"><?= $deconnexion ?></a></button></li> 
             <?php } ?>
             <a href="?uc=panier"><img class="navbar-img ml-3" src="./images/panier.png" alt=""></a>
-            <select class="form-select ml-3" aria-label="Default select example">
-              <option selected>Language</option>
-              <option value="1">Français</option>
-              <option value="2">Anglais</option>
+            <form method="post">
+            <select name="langue" class="form-select ml-3" aria-label="Default select example">
+              <option selected value="fr">FR</option>
+              <option value="en">EN</option>
             </select>
+            <button class="btn btn-outline-success my-2 my-sm-0" name="bouton_langue"><?= $traduction ?></button>
+            </form>
           </div>
       </nav>
 </header>
@@ -49,7 +51,7 @@
 
 <script>
 function validationDeconnexion(){
-if ( confirm( "Voulez-vous vraiment vous d\u00e9connecter ?" ) ) {
+if ( confirm(" <?= $msg_deco ?> ") ) {
     location.href="?uc=deconnexion";
 } else {
    

@@ -40,9 +40,12 @@ switch($action)
         if (isset($_GET["id"])) {
 
             $ID = htmlentities($_GET["id"]);
-
+            
             $leManga = MangaDal::loadMangaByID($ID);
-
+            $lesGenres = MangaDal::loadMangaGenreByID($ID);
+            $nbVolume = MangaDal::nbVolume($ID);
+            $tabStock = MangaDal::getStockByID($ID);
+            
             // connexion à la base de données
             // récupération du libellé dans la base
 
@@ -53,6 +56,14 @@ switch($action)
                 $tabErreurs["ID"] = $ID;
                 $hasErrors = true;
             }
+
+            if ($lesGenres == null) {
+
+                $tabErreurs["Erreur"] = "Problème avec les genres !";
+                $tabErreurs["ID"] = $ID;
+                $hasErrors = true;
+            }
+
             if ($hasErrors) {
                 $msg = "La consultation est impossible";
                  $lien = '<a href="?uc=gererManga">retour à la saisie</a>';
@@ -69,12 +80,104 @@ switch($action)
         }
     }
     break;
+    case "ajouterVolume":{
+        if($estAdministrateur == false) {
+            $msg = "Accès non autorisé";
+            include 'views/_v_afficherMessage.php';
+        }else{
+            // traitement de l'option : saisie ou validation ?
+        if (isset($_GET["option"])) {
+        $option = htmlentities($_GET["option"]);
+        } else {
+        $option = 'saisirVolume';
+        }
+        switch ($option) {
+            case 'saisirVolume': {
+                
+                
+                include 'views/v_ajouterVolume.php';
+                }
+            
+            break;
+            
+            case 'validerSaisie': {
+                $afficherForm = false;
+                if (isset($_POST["cmdValider"])) {
+
+                    // récupération de l'id
+                    if (!empty($_GET["id"])) {
+                        $id = ucfirst(htmlentities($_GET["id"]));
+                        //echo $id;
+                    }
+                    // récupération du volume
+                    if (!empty($_POST["volume"])) {
+                        $volume = ucfirst(htmlentities($_POST["volume"]));
+                    }
+                    // récupération du stock
+                    if (!empty($_POST["stock"])) {
+                        $stock = htmlentities($_POST["stock"]);
+                    }
+                }else {
+
+                    $msg = "Une erreur s'est produite";
+                    $lien = '<a href="?uc=gererManga">retour à la saisie</a>';
+                    $tabErreurs["Erreur"] = "Accès interdit";
+                    $hasErrors = true;
+                    include 'views/_v_afficherErreurs.php';
+                }
+                if(!empty($id) and !empty($volume) and !empty($stock)){
+
+                }else{
+                    if (empty($id)) {
+                        $tabErreurs["id"] = "L'id doit être renseigné ! ";
+                    }
+                    if (empty($volume)) {
+                        $tabErreurs["volume"] = "Le volume doit être renseigné ! ";
+                    }
+                    if (empty($stock)) {
+                        $tabErreurs["stock"] = "Le stock doit être renseigné ! ";
+                    }
+                    $hasErrors = true;
+                }
+                $existe = MangaDal::existeVolume($id, $volume);
+                if($existe == null){
+                  $ajoute = MangaDal::addVolume($id, $volume, $stock);
+                  //echo $ajoute;
+                }
+                else echo $existe;
+            }
+            break;
+    }
+    }
+}
+    break;
+     case "modifierVolume": {
+         if($estAdministrateur == false) {
+            $msg = "Accès non autorisé";
+             include 'views/_v_afficherMessage.php';
+         }else{
+             if (isset($_GET["option"])) {
+         $option = htmlentities($_GET["option"]);
+         } else {
+         $option = '';
+         }
+        switch ($option) {
+            case '':{
+            include 'views/v_modifierVolume.php';
+            }
+            if (isset($_GET["id"]) && $_GET["id"] != null) {
+                $intID = $_GET["id"];
+                 echo $intID;
+            }
+         }
+         }
+     }
+    break;
     case "ajouterManga": {
         $hasErrors = false;
         $id = '';
         $nom = '';
         $prix = '';
-        $stock = '';
         $description = '';
         $etat = '';
         $annee = '';
@@ -82,6 +185,9 @@ switch($action)
         $dessinateur = '';
         $idPays = '';
         $lienImage = '';
+        $genre = '';
+        $genre2 = '';
+        $genre3 = '';
 
         if($estAdministrateur == false) {
             $msg = "Accès non autorisé";
@@ -105,56 +211,72 @@ switch($action)
                     $afficherForm = false;
                     if (isset($_POST["cmdValider"])) {
 
-                        // récupération du titre
+                        // récupération de l'id
                         if (!empty($_POST["id"])) {
                             $id = ucfirst(htmlentities($_POST["id"]));
                         }
-                        // récupération du salle
+                        // récupération du nom
                         if (!empty($_POST["nom"])) {
                             $nom = ucfirst(htmlentities($_POST["nom"]));
                         }
-                        // récupération du rayon
+                        // récupération du prix
                         if (!empty($_POST["prix"])) {
                             $prix = htmlentities($_POST["prix"]);
                         }
-                        // récupération du genre
-                        if (strlen(trim($_POST["stock"])) != 0) {
-                            $stock = htmlentities($_POST["stock"]);
-                            //echo $stock;
-                        }
-                        // récupération du genre
+
+                        // récupération de la desccription
                         if (!empty($_POST["description"])) {
                             $description = ucfirst(htmlentities($_POST["description"]));
                         }
                         
-                        // récupération du genre
+                        // récupération de l'état
                         if (!empty($_POST["etat"])) {
                             $etat = htmlentities($_POST["etat"]);
                         }
 
-                         // récupération du genre
+                         // récupération de l'annee
                         if (!empty($_POST["annee"])) {
                             $annee = htmlentities($_POST["annee"]);
                         }
 
-                         // récupération du genre
+                         // récupération de l'auteur
                          if (!empty($_POST["auteur"])) {
                             $auteur = ucfirst(htmlentities($_POST["auteur"]));
                         }
 
-                         // récupération du genre
+                         // récupération du dessinateur
                          if (!empty($_POST["dessinateur"])) {
                             $dessinateur = ucfirst(htmlentities($_POST["dessinateur"]));
                         }
 
-                         // récupération du genre
+                         // récupération de l'id Pays
                          if (!empty($_POST["idPays"])) {
                             $idPays = htmlentities($_POST["idPays"]);
                         }
 
-                        // récupération du genre
+                        // récupération du lien
                          if (!empty($_POST["lien"])) {
                             $lienImage = htmlentities($_POST["lien"]);
+                        }
+
+                        // récupération du lien
+                        if (!empty($_POST["genre"])) {
+                            $genre = htmlentities($_POST["genre"]);
+                            echo $genre;
+                        }
+
+                        if(isset($_POST["genre1"]))
+                        {
+                            if (!empty($_POST["genre1"])) {
+                                $genre2 = htmlentities($_POST["genre1"]);
+                            }    
+                        }
+
+                        if(isset($_POST["genre2"]))
+                        {
+                            if (!empty($_POST["genre2"])) {
+                                $genre = htmlentities($_POST["genre2"]);
+                            }    
                         }
 
 
@@ -164,18 +286,14 @@ switch($action)
                         $lien = '<a href="index.php?uc=gererManga">retour à la saisie</a>';
                         $tabErreurs["Erreur"] = "Accès interdit";
                         $hasErrors = true;
-                        include 'vues/_v_afficherErreurs.php';
+                        include 'views/_v_afficherErreurs.php';
                     }
 
 
-                    if(strlen(trim($stock)) == 0 )
-                    {
-                        $stock = 0;
-                    }
 
 
                     // test zones obligatoires
-                    if (!empty($id) and !empty($nom) and !empty($prix)   and !empty($description)and !empty($annee)and !empty($auteur)and !empty($dessinateur)and !empty($idPays)and !empty($lienImage)) {
+                    if (!empty($id) and !empty($nom) and !empty($prix)   and !empty($description)and !empty($annee)and !empty($auteur)and !empty($dessinateur)and !empty($idPays)and !empty($lienImage) and !empty($genre)and !empty($genre2)and !empty($genre3)) {
                     } else {
                         // une ou plusieurs valeurs n'ont pas été saisies
                         if (empty($id)) {
@@ -207,6 +325,9 @@ switch($action)
                             $tabErreurs["lienImage"] = "le lien de l'image doit être précisé ";
                         }
 
+                        if (empty($genre)) {
+                            $tabErreurs["genre"] = "le lien de l'image doit être précisé ";
+                        }
 
                         $hasErrors = true;
                     }
@@ -214,16 +335,17 @@ switch($action)
                         // ajout dans la base de données
 
                         try {
-                            $res = MangaDal::addManga($id, $nom, $prix, $stock, $description,$etat,$annee, $auteur,$dessinateur,$idPays, $lienImage);
+                            $res = MangaDal::addManga($id, $nom, $prix, $description,$etat,$annee, $auteur,$dessinateur,$idPays, $lienImage);
+                            $res2 = MangaDal::addMangaGenre($id,$genre);
 
-                            if ($res > 0) {
+                            if ($res > 0 & $res > 0) {
                                 $msg = "Le manga nommé " . $nom . " de l'auteur " . $auteur .  " a été ajouté";
                                 include 'views/_v_afficherMessage.php';
                                 //include 'vues/v_consulterGenre.php
 
                             } else {
                                 $msg = "L'opération d'ajout n'a pas pu être menée à terme en raison des erreurs suivantes :";
-                                include 'vues/_v_afficherErreurs.php';
+                                include 'views/_v_afficherErreurs.php';
                             }
                         } catch (PDOException $e) {
                             $tabErreurs["Erreur"] = 'Une exception PDO a été levée !';
@@ -294,7 +416,6 @@ switch($action)
         else{
             $strNom = "";
             $floatPrix = "";
-            $intStock = "";
             $strDescription = "";
             $intEtat = 0;
             $intAnnee = 0;
@@ -317,7 +438,6 @@ switch($action)
                     // sinon recupérer toutes les valeurs du manga
                     $strNom = $leManga->getNom_manga();
                     $floatPrix = $leManga->getPrix();
-                    $intStock = $leManga->getStock();
                     $strDescription = $leManga->getDescription();
                     $intEtat = $leManga->getEtat();
                     $intAnnee = $leManga->getAnnee();
@@ -355,7 +475,6 @@ switch($action)
                                 }
             
                                 $floatPrix = htmlentities($_POST["txtPrix"]);
-                                $intStock = htmlentities($_POST["txtStock"]);
                                 $strDescription = ucfirst(htmlentities($_POST["txtDescription"]));
                                 $intEtat = htmlentities($_POST["txtEtat"]);
                                 $intAnnee = htmlentities($_POST["txtAnnee"]);
@@ -367,7 +486,6 @@ switch($action)
                                 if (!$hasErrors) {
                                     $leManga->setNom_manga($strNom);
                                     $leManga->setPrix($floatPrix);
-                                    $leManga->setStock($intStock);
                                     $leManga->setDescription($strDescription);
                                     $leManga->setEtat($intEtat);
                                     $leManga->setAnnee($intAnnee);
@@ -413,6 +531,6 @@ switch($action)
     }
     break;
     default:
-    include 'views/v_echerche_avancee.php';
+    include 'views/v_recherche_avancee.php';
     break;
 }

@@ -1,19 +1,19 @@
 <html>
 <link rel="stylesheet" href="css_blog.css" />
 <head>
-<h1><center>Connexion</center></h1>
-<br><center>Veuillez vous identifier en insérant votre adresse mail ainsi que votre mot de passe :</center></br>
+<h1><center><?= $connexion ?></center></h1>
+<br><center><?= $msg_co ?></center></br>
 <meta charset="UTF-8">
 </head>
 </br>
 <center>
 	<br>
 <form method="post" name="form1" onsubmit="verifie()" action="?uc=connexion&action=connexion&option=validerSaisie" class="co_encadree"> 
-Adresse mail : <br/> <input type="text" size=30 name="mail" id="mail" required><br/>
-Mot de passe : <br/> <input type="password" size=20 name="mdp" id="mdp" required><br/>
-<p>Vous n'êtes pas encore inscrit ? <a href="?uc=inscription">Inscrivez vous !</a></p>
+<?= $adresse_mail ?> : <br/> <input type="text" size=30 name="mail" id="mail" required><br/>
+<?= $mot_de_passe ?> : <br/> <input type="password" size=20 name="mdp" id="mdp" required><br/>
+<p><?= $inscrit ?> <a href="?uc=inscription"><?= $inscrit2 ?></a></p>
 
-<br><INPUT TYPE="submit" NAME="valider" VALUE=" Valider " class="btn btn-outline-success">
+<br><INPUT TYPE="submit" NAME="valider" VALUE=" <?= $valider ?> " class="btn btn-outline-success">
 </form>
 <p> <?= $estValide; ?> </p>
 <center>

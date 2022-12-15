@@ -35,6 +35,7 @@ $modifier = "Modifier";
 $msg_deco = "Voulez-vous vraiment vous déconnecter ?";
 $genre = "Genres";
 $stock_modif = "Modifier le stock";
+$supprimer_vol = "Voulez-vous vraiment supprimer ce volume ?";
 //modifier manga
 $titre_modif = "Modification du manga";
 //connexion
@@ -50,4 +51,8 @@ $nom_utilisateur = "Nom";
 $mdp_confirm = "Confirmation du mot de passe";
 //ajouter volume
 $titre_volume = "Ajouter un volume";
+//accueil
+$titre_accueil = "Bienvenue sur";
+//panier
+$quantite = "Quantité";
 ?>

@@ -1,7 +1,11 @@
 <?php
 require_once 'include/_config.inc.php';
+require_once  'include/_panier.php';
 include "include/_reference.lib.php";
 session_start();
+$_SESSION["qte"] = 0;
+
+
 if(isset($_SESSION["nom_utilisateur"])) $nom_u = $_SESSION["nom_utilisateur"];
 else $nom_u = "";
 $estAdministrateur = false;
@@ -13,6 +17,18 @@ else $estAdministrateur = false;
 }
 else $estAdministrateur = false;
 include("./vendor/autoload.php");
+
+
+
+
+
+
+
+
+
+
+
+
 if (isset($_GET['uc'])){
     $uc = $_GET['uc'];
 }else
@@ -63,7 +79,11 @@ switch($uc)
         include 'controleurs/c_gererManga.php';
         include 'views/v_footer.php';
         break;
-
+    case "gererPanier":
+        include 'views/v_header.php';
+        include 'controleurs/c_gererPanier.php';
+        include 'views/v_footer.php';
+        break;
     case "deconnexion":
         $_SESSION["nom_utilisateur"]="";
 		$_SESSION['id_utilisateur']= "";
@@ -74,7 +94,7 @@ switch($uc)
 
     default:
         include 'views/v_header.php';
-        include 'views/homepage.php';
+        include 'controleurs/c_homepage.php';
         include 'views/v_footer.php';
         break;
 }

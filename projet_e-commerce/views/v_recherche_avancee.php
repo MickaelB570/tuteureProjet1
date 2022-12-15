@@ -38,7 +38,19 @@
             <td><?php echo $unManga->getNom_manga() ?></td>
             <!-- afficher les colonnes suivantes -->
             <td><?php echo $unManga->getPrix(). "€" ?> </td>
-            <td><?php echo $unManga->getEtat() ?> </td>
+            <?php
+            if($unManga->getEtat() == 1)
+            {
+            ?>
+            <td><p > en cours</p></td>
+            <?php
+            } else
+            {
+            ?>
+            <td><p > Fini</p></td>
+            <?php
+            }
+            ?>  
             <td><?php echo $unManga->getAnnee() ?> </td>
             <td><?php echo $unManga->getAuteur() ?> </td>
             <td><?php echo $unManga->getDessinateur() ?> </td>
@@ -68,6 +80,15 @@
 
 
 <script>
+
+	let nom_manga = document.getElementsByTagName("td");
+	for(let i=0; i<nom_manga.length; i++){
+		nom_manga[i].innerHTML = nom_manga[i].innerHTML.replaceAll("â€™", "'");
+		nom_manga[i].innerHTML = nom_manga[i].innerHTML.replaceAll("â€", " ");
+        nom_manga[i].innerHTML = nom_manga[i].innerHTML.replaceAll("ã€‡", "O");
+        nom_manga[i].innerHTML = nom_manga[i].innerHTML.replaceAll("âˆ€", "");
+	}
+
 function validationSuppresssion(){
 if ( confirm( "<?= $msg_sup ?>" ) ) {
     location.href="?uc=gererManga&action=supprimerManga&id=<?php echo $unManga->getID() ?>";

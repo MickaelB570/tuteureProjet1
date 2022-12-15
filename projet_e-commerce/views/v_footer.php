@@ -25,5 +25,5 @@
             </ul>
         </div>
     </div>
-    <p class="footer-droit-réservé">&copy; 2022 Manga Store,<?= $droit ?>.</p>
+    <p class="footer-droit-réservé">&copy; 2022 MangaStore,<?= $droit ?>.</p>
    </footer>

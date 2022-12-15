@@ -36,7 +36,7 @@
             else { ?> 
               <li><button class="btn bg-danger"><a class="deconnexion text-light"  onclick="validationDeconnexion()"><?= $deconnexion ?></a></button></li> 
             <?php } ?>
-            <a href="?uc=panier"><img class="navbar-img ml-3" src="./images/panier.png" alt=""></a>
+            <a href="?uc=gererPanier&action=consulterPanier"><img class="navbar-img ml-3" src="./images/panier.png" alt=""></a>
             <form method="post">
             <select name="langue" class="form-select ml-3" aria-label="Default select example">
               <option selected value="fr">FR</option>

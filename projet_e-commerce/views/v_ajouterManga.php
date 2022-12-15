@@ -71,10 +71,17 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <input 
-                                        type="text" id="etat" 
-                                        name="etat"
-                                        size="50" maxlength="128"/>
+                                    <div>
+                                        <input type="radio" id="cours" name="etat" value="1">
+                                        <label for="cours">En cours</label>
+                                        </div>
+
+                                        <div>
+                                        <input type="radio" id="fini" name="etat" value="2">
+                                        <label for="fini">Fini</label>
+                                        </div>
+
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -123,10 +130,10 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <input 
-                                        type="text" id="idPays" 
-                                        name="idPays"
-                                        size="50" maxlength="128"/>
+                                    <select name="idPays" id="idPays">
+                                        <option value="">--Merci de choisir un pays--</option>
+                                        <option value="1">Japon</option>
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
@@ -169,7 +176,7 @@
             </form>
 
             <script>
-                i = 0;
+   i = 0;
                 function addTab() {
             i++;
             if(i < 3)
@@ -185,6 +192,7 @@
                 let input = document.createElement('select');
 
                 input.id = "genre"+i;
+                input.name  = "genre"+i;
                 
                 label.for = "Genre"+i;
 

@@ -1,10 +1,4 @@
 <div id="content">
-    <?php
-    // affichage du lien de retour
-    if (strlen($lien) > 0) {
-        echo $lien;
-    }
-    ?>
     <br /><br />
     <span class="info">
         <?php 

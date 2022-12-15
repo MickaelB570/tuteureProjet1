@@ -36,7 +36,7 @@ switch($action)
 
     case "consulterManga": {
         $hasErrors = false;
-
+        $msg_ajout_panier = "";
         if (isset($_GET["id"])) {
 
             $ID = htmlentities($_GET["id"]);
@@ -46,6 +46,9 @@ switch($action)
             $nbVolume = MangaDal::nbVolume($ID);
             $tabStock = MangaDal::getStockByID($ID);
             
+
+         
+
             // connexion à la base de données
             // récupération du libellé dans la base
 
@@ -69,6 +72,36 @@ switch($action)
                  $lien = '<a href="?uc=gererManga">retour à la saisie</a>';
                 include 'views/_v_afficherErreurs.php';
             } else {
+
+                if(isset($_GET['panier']))
+                {
+
+                    if(!isset($_SESSION['panier']))
+                    {
+                        creationPanier();
+                    }
+
+
+                    $panier = $_GET['panier'];
+                    switch($panier)
+                    {
+                        case "ajouter" :
+                        {
+                            if(isset($_GET['vol']))
+                            {
+                                $vol =  $_GET['vol'];
+                                ajouterArticle($leManga->getNom_manga(),$ID,$vol,1,$leManga->getPrix());
+                                $msg_ajout_panier = "Le volume ".$vol." du manga ".$leManga->getNom_manga()." a été ajouté au panier ";
+                            } else
+                            {
+                                $tabErreurs["Erreur"] = "Pas de volume transféré !";
+                                $tabErreurs["ID"] = $ID;
+                                $hasErrors = true;
+                            }
+                        }
+                    }
+                }
+
                 include "views/v_consulterManga.php";
              }
         } else {
@@ -143,6 +176,8 @@ switch($action)
                 if($existe == null){
                   $ajoute = MangaDal::addVolume($id, $volume, $stock);
                   //echo $ajoute;
+                header('Status: 301 Moved Permanently', false, 301); 
+                header('Location: ?uc=gererManga&action=consulterManga&id='.$id);
                 }
                 else echo $existe;
             }
@@ -165,13 +200,48 @@ switch($action)
             case '':{
             include 'views/v_modifierVolume.php';
             }
+            case 'validerSaisie': {
+                if (isset($_POST["cmdValider"])) {
             if (isset($_GET["id"]) && $_GET["id"] != null) {
-                $intID = $_GET["id"];
-                 echo $intID;
+                $intID = htmlentities($_GET["id"]);
+                 //echo $intID;
+                 if (isset($_GET["vol"]) && $_GET["vol"] != null) $vol = htmlentities($_GET["vol"]);
+                 //echo $vol;
+                 if (!empty($_POST["stock"])) {
+                    $stock = htmlentities($_POST["stock"]);
+                } else{
+                    echo "Le stock doit être renseigné ! ";
+                    die();
+                }
+                if($stock < 0) {
+                    echo "Le stock doit être positif ou nul !";
+                    die();
+                }
+                $modif_stock = MangaDal::setStock($intID, $vol, $stock);
+                if($modif_stock == null){
+                    header('Status: 301 Moved Permanently', false, 301); 
+                    header('Location: ?uc=gererManga&action=consulterManga&id='.$intID);
+                } else echo $modif_stock;
+
             }
+        }
+        }
+        break;
          }
          }
      }
+    break;
+    case "supprimerVolume";{
+        if (isset($_GET["id"]) && $_GET["id"] != null) {
+            $id = htmlentities($_GET["id"]);
+            if (isset($_GET["vol"]) && $_GET["vol"] != null) $vol = htmlentities($_GET["vol"]);
+            $sup_vol = MangaDal::delVolume($id, $vol);
+            if($sup_vol == 1){
+                header('Status: 301 Moved Permanently', false, 301); 
+                header('Location: ?uc=gererManga&action=consulterManga&id='.$id);
+            } else echo $sup_vol;
+        }
+    }
     break;
     case "ajouterManga": {
         $hasErrors = false;
@@ -262,9 +332,8 @@ switch($action)
                         // récupération du lien
                         if (!empty($_POST["genre"])) {
                             $genre = htmlentities($_POST["genre"]);
-                            echo $genre;
                         }
-
+                        
                         if(isset($_POST["genre1"]))
                         {
                             if (!empty($_POST["genre1"])) {
@@ -275,7 +344,7 @@ switch($action)
                         if(isset($_POST["genre2"]))
                         {
                             if (!empty($_POST["genre2"])) {
-                                $genre = htmlentities($_POST["genre2"]);
+                                $genre3 = htmlentities($_POST["genre2"]);
                             }    
                         }
 
@@ -293,9 +362,10 @@ switch($action)
 
 
                     // test zones obligatoires
-                    if (!empty($id) and !empty($nom) and !empty($prix)   and !empty($description)and !empty($annee)and !empty($auteur)and !empty($dessinateur)and !empty($idPays)and !empty($lienImage) and !empty($genre)and !empty($genre2)and !empty($genre3)) {
+                    if (!empty($id) and !empty($nom) and !empty($prix)   and !empty($description)and !empty($annee)and !empty($auteur)and !empty($dessinateur)and !empty($idPays)and !empty($lienImage) and !empty($genre)) {
                     } else {
-                        // une ou plusieurs valeurs n'ont pas été saisies
+                        echo "test";
+                        // une ou plusieurs valeurs n'ont pas été saisies 
                         if (empty($id)) {
                             $tabErreurs["id"] = "L'id doit être renseigné ! ";
                         }
@@ -338,10 +408,18 @@ switch($action)
                             $res = MangaDal::addManga($id, $nom, $prix, $description,$etat,$annee, $auteur,$dessinateur,$idPays, $lienImage);
                             $res2 = MangaDal::addMangaGenre($id,$genre);
 
-                            if ($res > 0 & $res > 0) {
+
+                            if ($res > 0 && $res2 > 0) {
+
+                                if (!empty($genre2)) {
+                                    $res3 = MangaDal::addMangaGenre($id,$genre2);
+                                }
+                                if (!empty($genre3)) {
+                                    $res4 = MangaDal::addMangaGenre($id,$genre3);
+                                }
+
                                 $msg = "Le manga nommé " . $nom . " de l'auteur " . $auteur .  " a été ajouté";
                                 include 'views/_v_afficherMessage.php';
-                                //include 'vues/v_consulterGenre.php
 
                             } else {
                                 $msg = "L'opération d'ajout n'a pas pu être menée à terme en raison des erreurs suivantes :";
@@ -389,7 +467,8 @@ switch($action)
     
             if (!$hasErrors) {
                 $res = MangaDal::delManga($leManga->getID());
-                if ($res > 0) {
+                $res3 = MangaDal::delMangaGenre($leManga->getID());
+                if ($res > 0 && $res3 > 0) {
                     $msg = "le manga a été supprimé";
                     include "views/_v_afficherMessage.php";
                     $lesMangas = MangaDal::loadMangaByID(1);

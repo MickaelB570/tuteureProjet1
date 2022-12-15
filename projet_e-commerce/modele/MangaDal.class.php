@@ -47,6 +47,48 @@ class MangaDal
         return $tab;
     }
 
+
+      /**
+     * charge un objet de la classe PDO à partir de son code
+     * @param $style : le code du manga
+     * @return un tableau de manga
+     */
+    public  static  function  loadMangasAnnee($annee)
+    {
+        $style = 1;
+        $cnx = new PdoDao();
+        $qry = "SELECT * "
+        . "FROM manga "
+        . "ORDER BY année DESC;";
+        $tab = $cnx->getRows($qry, array(), 1);
+        if (is_a($tab, 'PDOexception')) {
+            return PDO_EXCEPTION_VALUE;
+        }
+        if ($style == 1) {
+            $res = array();
+            foreach ($tab as $ligne) {
+                $unManga = new Manga(
+                    $ligne->id_manga, 
+                    $ligne->nom_manga,
+                    $ligne->prix,    
+                    $ligne->description,
+                    $ligne->état,
+                    $ligne->année,
+                    $ligne->auteur,
+                    $ligne->dessinateur,
+                    $ligne->id_pays,
+                    $ligne->lien_image
+                   
+                );
+                
+                array_push($res, $unManga);
+
+            }
+            return $res;
+        }
+        return $tab;
+    }
+
     /**
      * recupère toutes les informations d'un ouvrage par rapport un son id
      * @param $id : id du manga
@@ -89,21 +131,8 @@ class MangaDal
  */
 public static function addManga($id_manga,$nom_manga,$prix,$description,$état,$année,$auteur,$dessinateur,$id_pays,$lienImage) {
     $cnx = new PdoDao();
-    $qry = 'INSERT INTO manga (id_manga,nom_manga,prix,description,état,année,auteur,dessinateur,id_pays,lien_image) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
-    $res = $cnx->execSQL($qry, array(// nb de lignes affectées
-            
-            $id_manga,
-            $nom_manga,
-            $prix,
-            $description,
-            $état,
-            $année,
-            $auteur,
-            $dessinateur,
-            $id_pays,
-            $lienImage
-        )
-    );
+    $qry = "INSERT INTO manga (id_manga,nom_manga,prix,description,état,année,auteur,dessinateur,id_pays,lien_image) VALUES ('".$id_manga."','". $nom_manga."',". $prix .",'". $description ."',". $état .",". $année .",'". $auteur ."','".$dessinateur ."',". $id_pays .",'".$lienImage . "')";
+    $res = $cnx->execSQL($qry, array( ));
     if (is_a($res, 'PDOException')) {
         return PDO_EXCEPTION_VALUE;
     }
@@ -126,6 +155,21 @@ public static function addManga($id_manga,$nom_manga,$prix,$description,$état,$
         return $res;
     }
 
+
+        /**
+     * supprime un ouvrage de la table ouvrage
+     * @param $idManga : l"ID du manga
+     * @return le numéro du manga supprimé si la requête à réussi
+     */
+    public static function delMangaGenre($idManga) {
+        $cnx = new PdoDao();
+        $qry = 'DELETE FROM categorie_manga WHERE id_manga = "'.$idManga.'"';
+        $res = $cnx->execSQL($qry,array());
+        if (is_a($res,'PDOException')) {
+            return PDO_EXCEPTION_VALUE;
+        }
+        return $res;
+    }
 
         /**
      * met à jour un ouvrage
@@ -175,7 +219,6 @@ public static function addManga($id_manga,$nom_manga,$prix,$description,$état,$
     public static function addMangaGenre($id,$idGenre) {
         $cnx = new PdoDao();
         $qry = "INSERT INTO categorie_manga (id_manga,id_categ) VALUES ('".$id."',".$idGenre.")";
-        echo $qry;
         $res = $cnx->execSQL($qry,array());
         if (is_a($res, 'PDOException')){
             return PDO_EXCEPTION_VALUE;
@@ -243,7 +286,40 @@ public static function addManga($id_manga,$nom_manga,$prix,$description,$état,$
 
 
     }
-    
+
+    public static function setStock($id, $vol, $stock)
+    {
+        try {
+            $objPdo = new PDO('mysql:host=localhost;dbname=projet_e-commerce;charset=utf8', 'root', '');
+        } catch(Exception $e) {
+            die('Erreur : '.$e->getMessage());
+        }
+        try{
+        $req = $objPdo->prepare('UPDATE volume SET stock = :stock WHERE id_manga = :id AND num_volume = :vol');
+
+        $req->execute(array(
+
+       'stock' => $stock,
+        'id' => $id,
+       'vol' => $vol
+
+       ));
+    }catch(Exception $e){
+        return('Erreur : '.$e->getMessage());
+    }
+    return null;
+    }
+
+    public static function delVolume($id, $vol) {
+        $cnx = new PdoDao();
+        $qry = 'DELETE FROM volume WHERE id_manga = "'.$id.'" AND num_volume='.$vol.'';
+        //echo $qry;
+        $res = $cnx->execSQL($qry,array());
+        if (is_a($res,'PDOException')) {
+            return PDO_EXCEPTION_VALUE;
+        }
+        return $res;
+    }
 
 }
 

@@ -6,7 +6,7 @@ class Connexion{
     public static function validerSaisie($mail, $mdp){
 
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet_e-commerce;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }
@@ -44,7 +44,7 @@ class Connexion{
     include 'key.php';
     require "./vendor/autoload.php";
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet_e-commerce;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }

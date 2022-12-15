@@ -44,14 +44,14 @@ for($i = 0; $i < count($_SESSION['panier']['id']);$i++)
 ?>
 </div>
 <div class="btn-modifier-panier">
-    <button class="btn-success text-light "><a class="text-light text-decoration-none" 
+    <button class="btn btn-success text-light "><a class="text-light text-decoration-none" 
     <?php if($nom_u == "") {
          
         ?> href="?uc=connexion"  <?php 
     }else
     { ?> 
     href="?uc=gererPanier&action=commander" <?php 
-} ?>>Commander et Payer <?= $sum  ?> euros</a></button>
+} ?>>Commander et Payer <?= $sum  ?> euros (Frais de livraison inclus)</a></button>
 </div>
 <?php
     } else

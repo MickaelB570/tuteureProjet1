@@ -91,7 +91,20 @@ switch($uc)
         header('Status: 301 Moved Permanently', false, 301); 
         header('Location: ./');
         break;
-
+    case "contact":
+        {
+            include 'views/v_header.php';
+            include 'views/v_contact.php';
+            include 'views/v_footer.php';
+        }
+        break;
+    case "qui":
+        {
+            include 'views/v_header.php';
+            include 'views/v_qui.php';
+            include 'views/v_footer.php';
+        }
+        break;
     default:
         include 'views/v_header.php';
         include 'controleurs/c_homepage.php';

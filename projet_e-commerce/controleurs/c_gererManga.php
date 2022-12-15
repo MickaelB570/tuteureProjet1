@@ -91,6 +91,11 @@ switch($action)
                             {
                                 $vol =  $_GET['vol'];
                                 ajouterArticle($leManga->getNom_manga(),$ID,$vol,1,$leManga->getPrix());
+                                if(MangaDal::getStock($leManga->getID(),$vol) > 0)
+                                {
+                                    MangaDal::setStock($leManga->getID(),$vol,MangaDal::getStock($leManga->getID(),$vol)-1);
+                                }
+
                                 $msg_ajout_panier = "Le volume ".$vol." du manga ".$leManga->getNom_manga()." a été ajouté au panier ";
                             } else
                             {
@@ -146,8 +151,9 @@ switch($action)
                     if (!empty($_POST["volume"])) {
                         $volume = ucfirst(htmlentities($_POST["volume"]));
                     }
+                    
                     // récupération du stock
-                    if (!empty($_POST["stock"])) {
+                    if (!empty($_POST["stock"]) || $_POST["stock"] == 0 ) {
                         $stock = htmlentities($_POST["stock"]);
                     }
                 }else {
@@ -158,16 +164,18 @@ switch($action)
                     $hasErrors = true;
                     include 'views/_v_afficherErreurs.php';
                 }
-                if(!empty($id) and !empty($volume) and !empty($stock)){
+                if(!empty($id) and !empty($volume) and (!empty($stock) || $stock == 0 )){
 
                 }else{
+
+                    
                     if (empty($id)) {
                         $tabErreurs["id"] = "L'id doit être renseigné ! ";
                     }
                     if (empty($volume)) {
                         $tabErreurs["volume"] = "Le volume doit être renseigné ! ";
                     }
-                    if (empty($stock)) {
+                    if (empty($stock) && $stock != 0) {
                         $tabErreurs["stock"] = "Le stock doit être renseigné ! ";
                     }
                     $hasErrors = true;
@@ -207,7 +215,7 @@ switch($action)
                  //echo $intID;
                  if (isset($_GET["vol"]) && $_GET["vol"] != null) $vol = htmlentities($_GET["vol"]);
                  //echo $vol;
-                 if (!empty($_POST["stock"])) {
+                 if (!empty($_POST["stock"]) || $_POST["stock"] == 0  ) {
                     $stock = htmlentities($_POST["stock"]);
                 } else{
                     echo "Le stock doit être renseigné ! ";

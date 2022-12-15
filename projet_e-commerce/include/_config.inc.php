@@ -18,7 +18,8 @@ ini_set('error_reporting', E_ALL);      // en phase de développement
 // Serveur MySql
 define('DB_SERVER', 'localhost');
 // Nom de la base de données
-define('DB_DATABASE', 'projet_e-commerce');
+define('DB_DATABASE', 'projet');
+
 // Nom d'utilisateur pour se connecter à la base de données
 define('DB_USER', 'root');
 // Mot de passe pour se connecter à la base de données

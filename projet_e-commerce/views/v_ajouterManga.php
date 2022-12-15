@@ -3,7 +3,7 @@
 <?php //lien,idPays,dessinateur,auteur,annee,etat,description,stock,prix,nom,id ?>
 
 
-<div id="content">
+<div class="content-ajout">
     <h2>Gestion des mangas</h2>
     <div id="object-list">
      
@@ -11,7 +11,7 @@
                 <div class="corps-form">
                     <fieldset>
                         <legend>Ajouter un manga</legend>
-                        <table  id="espaceElement">
+                        <table class="table" id="espaceElement">
                         <tr>
                                 <td>
                                     <label for="id">
@@ -58,10 +58,8 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <input 
-                                        type="text" id="description" 
-                                        name="description"
-                                        size="300" maxlength="1000"/>
+                                        <textarea id="description" name="description" rows="8" cols="53">
+                                        </textarea>
                                 </td>
                             </tr>
                             <tr>

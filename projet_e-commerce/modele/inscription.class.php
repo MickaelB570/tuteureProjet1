@@ -5,7 +5,7 @@ class Inscription{
 
     public static function validerSaisie($nom, $mail, $mdp , $mdp2){
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet_e-commerce;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }
@@ -72,7 +72,7 @@ class Inscription{
     include 'key.php';
     require "./vendor/autoload.php";
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet_e-commerce;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }

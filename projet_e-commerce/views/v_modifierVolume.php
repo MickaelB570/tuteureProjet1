@@ -3,12 +3,12 @@ $id = $_GET["id"];
 $vol = $_GET["vol"];
 ?>
 
-
+<div class="bg-volume-ajout text-center mt-5 mb-5">
 <h1><center><?= $stock_modif ?></center></h1><br>
-<form action="?uc=gererManga&action=modifierVolume&id=<?= $id ?>&vol=<?= $vol ?>&option=validerSaisie" method="post">
+    <form action="?uc=gererManga&action=modifierVolume&id=<?= $id ?>&vol=<?= $vol ?>&option=validerSaisie" method="post">
                 <div class="corps-form">
                     <fieldset>
-                        <table>
+                        <table class="table">
                             <tr>
                                 <td>
                                     <label for="stock">
@@ -29,7 +29,8 @@ $vol = $_GET["vol"];
                     <p>
                         <input class='btn btn-outline-success' id="cmdValider" name="cmdValider" 
                                 type="submit"
-                                value="Ajouter"/>
+                                value="Modifier"/>
                     </p> 
                 </div>
-            </form>
+    </form>
+</div>

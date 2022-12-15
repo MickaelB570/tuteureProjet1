@@ -229,7 +229,7 @@ public static function addManga($id_manga,$nom_manga,$prix,$description,$état,$
 
     public static function nbVolume($id){
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet_e-commerce;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }
@@ -242,7 +242,7 @@ public static function addManga($id_manga,$nom_manga,$prix,$description,$état,$
     
     public static function getStockByID($id){
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet_e-commerce;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }
@@ -258,7 +258,7 @@ public static function addManga($id_manga,$nom_manga,$prix,$description,$état,$
     
     public static function existeVolume($id, $volume){
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet_e-commerce;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }
@@ -290,7 +290,7 @@ public static function addManga($id_manga,$nom_manga,$prix,$description,$état,$
     public static function setStock($id, $vol, $stock)
     {
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet_e-commerce;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }
@@ -308,6 +308,32 @@ public static function addManga($id_manga,$nom_manga,$prix,$description,$état,$
         return('Erreur : '.$e->getMessage());
     }
     return null;
+    }
+
+
+    
+    /**
+     * recupère toutes les informations d'un ouvrage par rapport un son id
+     * @param $id : id du manga
+     * @return un objet manga
+     */
+    public static function getStock($idManga,$idVolume) {
+        $cnx = new PdoDao();
+        // requête
+        $qry = 'SELECT * from volume WHERE id_manga ="'. $idManga  . '" and num_volume="'. $idVolume .'"';
+        $res = $cnx->getRows($qry, array(), 1);
+
+        if (is_a($res, 'PDOException')) {
+
+            return PDO_EXCEPTION_VALUE;
+        }
+        if (!empty($res)) {
+            // le genre existe
+            $stock = $res[0]->stock;
+            return $stock;
+        } else {
+            return NULL;
+        }
     }
 
     public static function delVolume($id, $vol) {

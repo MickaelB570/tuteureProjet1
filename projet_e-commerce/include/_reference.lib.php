@@ -121,4 +121,56 @@ class Manga
 
 }
 
+class Commande
+{
+	private $id_commande;
+    private $id_utilisateur;
+    private $prixTotal;
+    private $estLivre;
+
+	public function __construct(
+        $Tid_commande,
+        $Tid_utilisateur,
+        $TprixTotal,
+        $TestLivre
+    ){
+		$this->setID_commande($Tid_commande);
+        $this->setID_utilisateur($Tid_utilisateur);
+        $this->setPrixTotal($TprixTotal);
+        $this->setEstLivre($TestLivre);
+	}
+
+	public function getID_commande() {
+		return $this->id_commande;
+	}
+
+	public function setID_commande($id_commande) {
+		$this->id_commande = $id_commande;
+	}
+
+	public function getID_utilisateur() {
+		return $this->id_utilisateur;
+	}
+
+	public function setID_utilisateur($id_utilisateur) {
+		$this->id_utilisateur = $id_utilisateur;
+	}
+
+	public function getPrixTotal() {
+		return $this->prixTotal;
+	}
+
+	public function setPrixTotal($prixTotal) {
+		$this->prixTotal = $prixTotal;
+	}
+
+	public function getEstLivre() {
+		return $this->estLivre;
+	}
+
+	public function setEstLivre($estLivre) {
+		$this->estLivre = $estLivre;
+	}
+}
+
 

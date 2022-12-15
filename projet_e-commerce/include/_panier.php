@@ -19,6 +19,7 @@ function creationPanier(){
  function ajouterArticle($nomManga,$idManga,$idVolume, $qte, $prix){
     $id = $idManga . $idVolume;
 
+
     //Si le panier existe
     if (creationPanier() && !isVerrouille())
     {
@@ -119,6 +120,18 @@ function creationPanier(){
     }
     else
     echo "Un problème est survenu veuillez contacter l'administrateur du site.";
+ }
+
+
+ function supprimerPanier(){
+   unset($_SESSION['panier']['id']);
+   unset($_SESSION['panier']['nomManga']);
+   unset($_SESSION['panier']['idManga']);
+   unset($_SESSION['panier']['idVolume']);
+   unset($_SESSION['panier']['qte']);
+   unset($_SESSION['panier']['prix']);
+   unset($_SESSION['panier']);
+   creationPanier();
  }
 
 

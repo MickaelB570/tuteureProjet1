@@ -24,7 +24,7 @@
                   <a class="nav-link" href="?uc=contact">Contact</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="?uc=qui_sommes_nous"><?= $qui ?></a>
+                  <a class="nav-link" href="?uc=qui"><?= $qui ?></a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" method="post" >
@@ -37,7 +37,7 @@
               <li><button class="btn bg-danger"><a class="deconnexion text-light"  onclick="validationDeconnexion()"><?= $deconnexion ?></a></button></li> 
             <?php } ?>
             <a href="?uc=gererPanier&action=consulterPanier"><img class="navbar-img ml-3" src="./images/panier.png" alt=""></a>
-            <form method="post">
+            <form method="post" class="my-2 my-lg-0">
             <select name="langue" class="form-select ml-3" aria-label="Default select example">
               <option selected value="fr">FR</option>
               <option value="en">EN</option>

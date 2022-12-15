@@ -5,20 +5,20 @@
 <div>
     <?php
     if($estAdministrateur == true){
-    echo "<button style='margin-left: 20px; margin-top: 20px;' class='btn btn-outline-success' onclick=\"window.location.href='?uc=gererManga&action=ajouterManga&option=saisirManga'\">". $ajout ."</button>";
+    echo "<button style='margin-left: 20px; margin-top: 20px; margin-bottom: 20px;' class='btn btn-outline-success' onclick=\"window.location.href='?uc=gererManga&action=ajouterManga&option=saisirManga'\">". $ajout ."</button>";
     }
     ?>
-    <table class="table-recherche">
+    <table class="table table-recherche">
                                 <!--affichage de l'entête du tableau -->
         <tr>
-        <th><?= $nom ?></th>
-        <th><?= $prix ?></th>
-        <th><?= $etat ?></th>                                    
-        <th><?= $annee ?></th>
-        <th><?= $auteur ?></th>
-        <th><?= $dessinateur ?></th>
-        <th><?= $couverture ?></th>
-        <th></th>
+        <th  scope="col"><?= $nom ?></th>
+        <th scope="col"><?= $prix ?></th>
+        <th scope="col"><?= $etat ?></th>                                    
+        <th scope="col"><?= $annee ?></th>
+        <th scope="col"><?= $auteur ?></th>
+        <th scope="col"><?= $dessinateur ?></th>
+        <th scope="col"><?= $couverture ?></th>
+        <th scope="col"></th>
         <?php
     if($estAdministrateur == true) 
     {
@@ -35,7 +35,7 @@
             
             ?>
             <tr>
-            <td><?php echo $unManga->getNom_manga() ?></td>
+            <td scope="row"><?php echo $unManga->getNom_manga() ?></td>
             <!-- afficher les colonnes suivantes -->
             <td><?php echo $unManga->getPrix(). "€" ?> </td>
             <?php
@@ -55,7 +55,7 @@
             <td><?php echo $unManga->getAuteur() ?> </td>
             <td><?php echo $unManga->getDessinateur() ?> </td>
             <td><img width="150px" src="<?php echo $unManga->getLien_image() ?> "> </img></td>
-            <td><button class="bg-primary text-light">
+            <td><button class="btn bg-primary text-light">
                     <a class="text-light" href="?uc=gererManga&action=consulterManga&id=<?php echo $unManga->getID() ?>"><?= $voir ?></a>
                 </button>
             </td>
@@ -64,7 +64,7 @@
     if($estAdministrateur == true) 
     {
         ?>
-        <td><button class="btn bg-danger text-light" onclick="validationSuppresssion()"><?= $supprimer ?></button></td>
+        <td><button class="btn bg-danger text-light""><a class="text-light" href="?uc=gererManga&action=supprimerManga&id=<?php echo $unManga->getID() ?>"><?= $supprimer ?></a></button></td>
         <?php
     } 
     ?>
@@ -89,16 +89,4 @@
         nom_manga[i].innerHTML = nom_manga[i].innerHTML.replaceAll("âˆ€", "");
 	}
 
-function validationSuppresssion(){
-if ( confirm( "<?= $msg_sup ?>" ) ) {
-    location.href="?uc=gererManga&action=supprimerManga&id=<?php echo $unManga->getID() ?>";
-} else {
-   
-}
-}
-
-function voirPlus()
-{
-    location.href="?uc=gererManga&action=consulterManga&id=<?php echo $unManga->getID() ?>";
-}
 </script>

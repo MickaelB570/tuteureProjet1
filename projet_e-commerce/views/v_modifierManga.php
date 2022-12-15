@@ -1,7 +1,7 @@
 <div class="bg-modifier text-center">
         <form action="index.php?uc=gererManga&action=modifierManga&id=<?php echo $intID; ?>&option=validerManga"
             method="post">
-            <table>
+            <table class="table">
                 <h1 class=""><?= $titre_modif ?></h1>
                 <label>ID</label>
                 <br>
@@ -59,7 +59,7 @@
                 <input class="input-modifier "  type="text" id="txtLien" name="txtLien" size="5" value="<?php echo $strLien ?>" />
                 <br>
             </table>
-            <input class="input-modifier-valider bg-warning" id="cmdValider" name="cmdValider" type="submit" value="<?= $modifier ?>" />
+            <input class="btn input-modifier-valider bg-warning" id="cmdValider" name="cmdValider" type="submit" value="<?= $modifier ?>" />
             </forms>
     </div>
 

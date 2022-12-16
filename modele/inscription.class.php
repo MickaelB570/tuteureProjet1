@@ -3,9 +3,9 @@ use \Defuse\Crypto\Crypto;
 use \Defuse\Crypto\Key;
 class Inscription{
 
-    public static function validerSaisie($nom, $mail, $mdp , $mdp2){
+    public static function validerSaisie($nom, $mail, $mdp , $mdp2, $nom_bdd){
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname='.$nom_bdd.';charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }
@@ -68,11 +68,11 @@ class Inscription{
 
             return null;
     }
-    public static function insererSaisie($nom, $mail, $mdp, $estAdministrateur){
+    public static function insererSaisie($nom, $mail, $mdp, $estAdministrateur, $nom_bdd){
     include 'key.php';
     require "./vendor/autoload.php";
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname='.$nom_bdd.';charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }

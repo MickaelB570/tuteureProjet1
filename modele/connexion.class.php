@@ -1,12 +1,13 @@
 <?php
 use \Defuse\Crypto\Crypto;
 use \Defuse\Crypto\Key;
+
 class Connexion{
 
-    public static function validerSaisie($mail, $mdp){
+    public static function validerSaisie($mail, $mdp, $nom_bdd){
 
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname='.$nom_bdd.';charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }
@@ -40,11 +41,11 @@ class Connexion{
 
     }
 
-    public static function connexion($mail, $mdp){
+    public static function connexion($mail, $mdp, $nom_bdd){
     include 'key.php';
     require "./vendor/autoload.php";
         try {
-            $objPdo = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
+            $objPdo = new PDO('mysql:host=localhost;dbname='.$nom_bdd.';charset=utf8', 'root', '');
         } catch(Exception $e) {
             die('Erreur : '.$e->getMessage());
         }

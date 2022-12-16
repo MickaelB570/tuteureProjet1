@@ -1,1 +1,0 @@
-<p class="text-center mt-5 mb-5"><?= $msg  ?></p>

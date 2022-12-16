@@ -4,7 +4,7 @@ require_once  'include/_panier.php';
 include "include/_reference.lib.php";
 session_start();
 $_SESSION["qte"] = 0;
-
+$_SESSION["nom_bdd"] = "projet";
 
 if(isset($_SESSION["nom_utilisateur"])) $nom_u = $_SESSION["nom_utilisateur"];
 else $nom_u = "";

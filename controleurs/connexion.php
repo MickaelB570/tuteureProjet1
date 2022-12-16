@@ -27,8 +27,8 @@ switch ($action) {
                                 else $mail = null;
                                 if (!empty($_POST["mdp"])) $mdp = htmlentities($_POST['mdp']);
                                 else $mdp = null;
-                                $estValide = Connexion::validerSaisie($mail, $mdp);
-                                if($estValide === null) $estValide = Connexion::connexion($mail, $mdp);
+                                $estValide = Connexion::validerSaisie($mail, $mdp, $_SESSION["nom_bdd"]);
+                                if($estValide === null) $estValide = Connexion::connexion($mail, $mdp, $_SESSION["nom_bdd"]);
                                 return $estValide;
         }
     }}}}
